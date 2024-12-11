@@ -1,0 +1,14 @@
+/Users/maksymkramarenko/StudyCode/PFundamentals/LinkedList/bin/Debug/net8.0/ОП
+/Users/maksymkramarenko/StudyCode/PFundamentals/LinkedList/bin/Debug/net8.0/ОП.deps.json
+/Users/maksymkramarenko/StudyCode/PFundamentals/LinkedList/bin/Debug/net8.0/ОП.runtimeconfig.json
+/Users/maksymkramarenko/StudyCode/PFundamentals/LinkedList/bin/Debug/net8.0/ОП.dll
+/Users/maksymkramarenko/StudyCode/PFundamentals/LinkedList/bin/Debug/net8.0/ОП.pdb
+/Users/maksymkramarenko/StudyCode/PFundamentals/LinkedList/obj/Debug/net8.0/ОП.GeneratedMSBuildEditorConfig.editorconfig
+/Users/maksymkramarenko/StudyCode/PFundamentals/LinkedList/obj/Debug/net8.0/ОП.AssemblyInfoInputs.cache
+/Users/maksymkramarenko/StudyCode/PFundamentals/LinkedList/obj/Debug/net8.0/ОП.AssemblyInfo.cs
+/Users/maksymkramarenko/StudyCode/PFundamentals/LinkedList/obj/Debug/net8.0/ОП.csproj.CoreCompileInputs.cache
+/Users/maksymkramarenko/StudyCode/PFundamentals/LinkedList/obj/Debug/net8.0/ОП.dll
+/Users/maksymkramarenko/StudyCode/PFundamentals/LinkedList/obj/Debug/net8.0/refint/ОП.dll
+/Users/maksymkramarenko/StudyCode/PFundamentals/LinkedList/obj/Debug/net8.0/ОП.pdb
+/Users/maksymkramarenko/StudyCode/PFundamentals/LinkedList/obj/Debug/net8.0/ОП.genruntimeconfig.cache
+/Users/maksymkramarenko/StudyCode/PFundamentals/LinkedList/obj/Debug/net8.0/ref/ОП.dll
