@@ -1,6 +1,5 @@
 using System.Collections;
-using System.Drawing;
-
+namespace ОП;
 public class LinkedList<T> : IEnumerable<T>
 {
     private Node<T>? _first = null;
@@ -9,18 +8,18 @@ public class LinkedList<T> : IEnumerable<T>
 
     public T? First
     {
-        get => (_first != null) ? _first.Value : throw new Exception("The list is empty");
+        get => _first != null ? _first.Value : throw new Exception("The list is empty");
     }
 
     public T? Last
     {
-        get => (_last != null) ? _last.Value : throw new Exception("The list is empty");
+        get => _last != null ? _last.Value : throw new Exception("The list is empty");
     }
 
-    public T At(int index)
+    public T? At(int index)
     {
         IndexCheck(index);
-        return AtNode(index)?.Value ?? throw new Exception("");
+        return AtNode(index).Value ?? throw new Exception("");
     }
 
     public T? Find(Predicate<T> predicate)
@@ -28,16 +27,16 @@ public class LinkedList<T> : IEnumerable<T>
         var currentNode = _first;
         while (currentNode != null)
         {
-            if (predicate(currentNode.Value)) return currentNode.Value;
+            if (currentNode.Value != null && predicate(currentNode.Value)) return currentNode.Value;
             currentNode = currentNode.Next;
         }
-        return default(T);
+        return default;
     }
 
     public void AddFirst(T value)
     {
         Node<T> node = new Node<T>(null, _first, value);
-        if (_size == 0)
+        if (_first == null)
         {
             _first = node;
             _last = node;
@@ -52,7 +51,7 @@ public class LinkedList<T> : IEnumerable<T>
     public void AddLast(T value)
     {
         Node<T> node = new Node<T>(null, _first, value);
-        if (_size == 0)
+        if (_last == null)
         {
             _first = node;
             _last = node;
@@ -64,24 +63,25 @@ public class LinkedList<T> : IEnumerable<T>
         _size++;
     }
 
-    public void Insert(int index, T value)
+    public void Insert(int index, T value)//Edge casses
     {
-        Node<T>? position = AtNode(index);
+        Node<T> position = AtNode(index);
         Node<T> node = new(position.Prev, position, value);
-        position.Prev.Next = node;
+        if (position.Prev != null)
+            position.Prev.Next = node;
         position.Prev = node;
         _size++;
     }
 
-    public void Remove(T value)
+    public void Remove(T? value)//Edge casses
     {
         var currentNode = _first;
         while (currentNode != null)
         {
-            if(currentNode.Value == value)
+            if (currentNode.Value?.GetHashCode() == value?.GetHashCode())
             {
-                currentNode.Prev.Next = currentNode.Next;
-                currentNode.Next.Prev = currentNode.Prev;
+                if(currentNode.Prev != null) currentNode.Prev.Next = currentNode.Next;
+                if(currentNode.Next != null) currentNode.Next.Prev = currentNode.Prev;
                 _size--;
                 return;
             }
@@ -92,7 +92,7 @@ public class LinkedList<T> : IEnumerable<T>
     public void RemoveFirst()
     {
         Node<T>? newFirst = _first?.Next;
-        newFirst.Prev = null;
+        if(newFirst?.Prev != null) newFirst.Prev = null;
         _first = newFirst;
         _size--;
     }
@@ -100,7 +100,7 @@ public class LinkedList<T> : IEnumerable<T>
     public void RemoveLast()
     {
         Node<T>? newLast = _last?.Prev;
-        newLast.Next = null;
+        if(newLast?.Prev != null) newLast.Next = null;
         _last = newLast;
         _size--;
     }
@@ -115,22 +115,22 @@ public class LinkedList<T> : IEnumerable<T>
         if (index < 0 || index >= _size) throw new Exception("Index is out of range");
     }
 
-    private Node<T>? AtNode(int index)
+    private Node<T> AtNode(int index)
     {
         IndexCheck(index);
         int current = 0;
-        Node<T>? currentNode = _first;
+        var currentNode = _first;
         while (current != index)
         {
             currentNode = currentNode?.Next;
             current++;
         }
-        return currentNode;
+        return currentNode ?? throw new Exception("Node is null");
     }
 
     public IEnumerator<T> GetEnumerator()
     {
-        return new LinkedListEnumerator(_first);
+        return new LinkedListEnumerator(_first ?? new Node<T> (null, null, default));
     }
 
     IEnumerator IEnumerable.GetEnumerator()
@@ -138,14 +138,14 @@ public class LinkedList<T> : IEnumerable<T>
         throw new NotImplementedException();
     }
 
-    private class LinkedListEnumerator (Node<T>? current) : IEnumerator<T>
+    private class LinkedListEnumerator(Node<T> current) : IEnumerator<T>
     {
 
-        public T Current { get => current?.Value; }
+        public T Current { get => current.Value; }
 
         object? IEnumerator.Current => Current;
 
-        private Node<T>? _initial = (current == null) ? null : new (current.Prev, current.Next, current.Value);
+        private Node<T> _initial = new(current.Prev, current.Next, current.Value);
 
         public void Dispose()
         {
@@ -154,7 +154,7 @@ public class LinkedList<T> : IEnumerable<T>
 
         public bool MoveNext()
         {
-            if(current?.Next == null) return false;
+            if (current?.Next == null) return false;
             current = current.Next;
             return true;
         }
